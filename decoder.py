@@ -3,26 +3,6 @@
 from logging import exception
 from time import sleep
 
-def listFrequency(file):
-
-    for str_Line in file:
-        for c in str_Line:
-            addInDict(c)
-            
-
-def addInDict(c):
-
-    if(ord(c) > 64 and ord(c) < 123):    #Only characters in range 65:122
-
-        if(ord(c) < 91 or ord(c) > 96):
-
-            if (dict_letter.get(c)): # Has in dict
-                dict_letter[c] = ((dict_letter.get(c)) + 1)
-                        
-            else:   #Dont has in dict
-                dict_letter[c] = 1  
-        
-
 def createDictionary(file):
 
     dict_aux = {}   #Create Dictinary
@@ -37,18 +17,45 @@ def createDictionary(file):
     
     return dict_aux
 
+def listFrequency(file):
+
+    aux = 0
+
+    for str_Line in file:
+        for c in str_Line:
+            aux += addInDict(c)
+    
+    return aux
+            
+def addInDict(c):
+
+    if(ord(c) > 64 and ord(c) < 123):    #Only characters in range 65:122
+
+        if(ord(c) < 91 or ord(c) > 96):
+
+            if (dict_letter.get(c)): # Has in dict
+                dict_letter[c] = ((dict_letter.get(c)) + 1)
+                        
+            else:   #Dont has in dict
+                dict_letter[c] = 1  
+            
+            return 1
+    
+    return 0    
+
 def findKey(file):
 
-    size_Full = len(file.read())
-    file.seek(0)
+    count_Char = 0
 
-    listFrequency(file)
+    count_Char = listFrequency(file)
+
+    print(count_Char)
 
     print(dict_letter)
 
     print("END")
 
-#   ---------- MAIN ----------   #
+#   -------------------- MAIN --------------------   #
 
 print(f'{"Caesar Decoder":=^50}')
 
