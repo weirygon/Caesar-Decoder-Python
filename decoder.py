@@ -12,18 +12,18 @@ def listFrequency(file):
 
 def addInDict(c):
 
-    if(ord(c) > 64 or ord(c) < 123):    #Only characters in range 65:122
+    if(ord(c) > 64 and ord(c) < 123):    #Only characters in range 65:122
 
-        if (dict_letter.get(c)): # Has in dict
-            int_Aux = dict_letter.get(c)
-            int_Aux += 1
+        if(ord(c) < 91 or ord(c) > 96):
 
-            dict_letter[c] = int_Aux
-                    
-        else:   #Dont has in dict
-           dict_letter[c] = 1 
+            if (dict_letter.get(c)): # Has in dict
+                dict_letter[c] = ((dict_letter.get(c)) + 1)
+                        
+            else:   #Dont has in dict
+                dict_letter[c] = 1  
+        
 
-def createDictionary(file) :
+def createDictionary(file):
 
     dict_aux = {}   #Create Dictinary
 
