@@ -6,6 +6,7 @@ from time import sleep
 def createDictionary(file):
 
     dict_aux = {}   #Create Dictinary
+    dict_aux1 = {}
 
     for aux in file:
         aux = aux.split()
@@ -14,18 +15,38 @@ def createDictionary(file):
         percentage = float(aux[1])
         
         dict_aux[letter] = percentage
+
+    #Organizing Dict
+
+    for i in sorted(dict_aux, key = dict_aux.get, reverse=True):
+        dict_aux1[i] = dict_aux[i]
     
-    return dict_aux
+    return dict_aux1
 
 def listFrequency(file):
 
-    aux = 0
+    aux_int = 0
+
+    #Add in Dict
 
     for str_Line in file:
-        for c in str_Line:
-            aux += addInDict(c)
+        for c in str_Line.upper():
+            aux_int += addInDict(c)
     
-    return aux
+    #Organizing Dict
+
+    dict_aux = dict()
+
+    for i in sorted(dict_letter, key = dict_letter.get, reverse=True):
+        dict_aux[i] = dict_letter[i]
+
+    #Converting to percentage
+
+    for i in dict_aux:
+        aux_float = (dict_aux[i] * 100) / aux_int
+        dict_aux[i] = round(aux_float, 2)
+
+    return  dict_aux, aux_int   #Dict Organized, Count of letter 
             
 def addInDict(c):
 
@@ -47,11 +68,15 @@ def findKey(file):
 
     count_Char = 0
 
-    count_Char = listFrequency(file)
+    dict_letter, count_Char = listFrequency(file)
 
     print(count_Char)
 
     print(dict_letter)
+
+    print()
+
+    print(dict_language)
 
     print("END")
 
@@ -85,8 +110,5 @@ except FileNotFoundError :
 
 else:
     print("[+] Opening %s..." % (str_file_In))
-
-
-
 
 findKey(file_In)
