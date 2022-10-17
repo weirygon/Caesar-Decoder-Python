@@ -62,7 +62,10 @@ def addInDict(c):
             
             return 1
     
-    return 0    
+    return 0
+
+def closer():
+    pass
 
 def findKey(file):
 
@@ -99,7 +102,7 @@ else:
 dict_language = createDictionary(dict_In) #Dict with data frequency of language
 dict_letter = dict()    #Dict with letter and frequency of text
 
-str_file_In = "teste.txt"   #input("Inform the name of text: ")
+str_file_In = "textIn.txt"   #input("Inform the name of text: ")
 
 try:
     file_In = open(str_file_In)
