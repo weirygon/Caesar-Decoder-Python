@@ -64,8 +64,23 @@ def addInDict(c):
     
     return 0
 
-def closer():
-    pass
+def closer(lang, text):   #This function return the letter that is closest in dict_language 
+    
+    dict_aux = {}
+
+    for i in text:
+        min = 26    #Seting the max level
+        for j in lang:
+        
+            dist = text[i] - lang[j]
+            if dist < 0:    dist = dist * (-1)
+            
+            if dist < min:
+                min = dist
+                dict_aux[i] = j
+                
+
+    return dict_aux
 
 def findKey(file):
 
@@ -81,13 +96,39 @@ def findKey(file):
 
     print(dict_language)
 
-    print("END")
+    dict_encrypt = closer(dict_language, dict_letter)
+
+    print()
+    print(dict_encrypt)
+
+    dict_keys = {}
+
+    for i in dict_encrypt:
+        char_aux = ord(i) - ord(dict_encrypt[i])
+        if char_aux < 0:    char_aux = char_aux * (-1)  #Make a pisitive number
+        
+        if (dict_keys.get(char_aux)): # Has in dict
+                dict_keys[char_aux] = ((dict_keys.get(char_aux)) + 1)
+                        
+        else:   #Dont has in dict
+            dict_keys[char_aux] = 1
+   
+    print(dict_keys)
+
+    #Organizing Dict
+
+    dict_aux = dict()
+
+    for i in sorted(dict_keys, key = dict_keys.get, reverse=True):
+        dict_aux[i] = dict_keys[i]
+
+    return dict_aux #Return dict organizing with posible keys
 
 #   -------------------- MAIN --------------------   #
 
 print(f'{"Caesar Decoder":=^50}')
 
-str_dict_In = "pt.txt"  #input("Inform the name of table frequency: ")
+str_dict_In = input("Inform the name of table frequency: ")
 
 try:
     dict_In = open(str_dict_In, "r")
@@ -102,7 +143,7 @@ else:
 dict_language = createDictionary(dict_In) #Dict with data frequency of language
 dict_letter = dict()    #Dict with letter and frequency of text
 
-str_file_In = "textIn.txt"   #input("Inform the name of text: ")
+str_file_In =  input("Inform the name of text: ")
 
 try:
     file_In = open(str_file_In)
@@ -114,4 +155,11 @@ except FileNotFoundError :
 else:
     print("[+] Opening %s..." % (str_file_In))
 
-findKey(file_In)
+dict_keys = findKey(file_In)
+
+print(f'{" Possible Keys ":#^48}')
+
+print("Ord: Most probable to the less!")
+
+for i in dict_keys:
+    print("Key: ", i)
